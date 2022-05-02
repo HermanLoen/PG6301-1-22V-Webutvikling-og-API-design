@@ -2,20 +2,18 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 
-class FrontPage extends React.Component {
-  render() {
-    return (
+function FrontPage() {
+  return (
+    <div>
+      <h1>Front page</h1>
       <div>
-        <h1>Front page</h1>
-        <div>
-          <Link to="/login">Login</Link>
-        </div>
-        <div>
-          <Link to="/profiles">Profile</Link>
-        </div>
+        <Link to="/login">Login</Link>
       </div>
-    );
-  }
+      <div>
+        <Link to="/profiles">Profile</Link>
+      </div>
+    </div>
+  );
 }
 
 function Login() {
