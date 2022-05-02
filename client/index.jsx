@@ -11,7 +11,7 @@ class FrontPage extends React.Component {
           <Link to="/login">Login</Link>
         </div>
         <div>
-          <Link to="/profile">Profile</Link>
+          <Link to="/profiles">Profile</Link>
         </div>
       </div>
     );
