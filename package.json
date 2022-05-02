@@ -1,5 +1,5 @@
 {
-  "name": "pg6301-1-22v-webutvikling-og-api-design",
+  "name": "tasks-for-exam",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,23 +7,23 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently npm:dev:client npm:dev:server",
     "dev:client": "cd client && npm run dev",
-    "der:server": "cd server && npm run dev",
-    "build": "npm run build:client&& npm run build:server",
+    "dev:server": "cd server && npm run dev",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "cd client && npm run build",
     "build:server": "cd server && npm run build",
     "start": "cd server && npm start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HermanLoen/PG6301-1-22V-Webutvikling-og-API-design.git"
+    "url": "git+https://github.com/simenhaga/tasks-for-exam.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HermanLoen/PG6301-1-22V-Webutvikling-og-API-design/issues"
+    "url": "https://github.com/simenhaga/tasks-for-exam/issues"
   },
-  "homepage": "https://github.com/HermanLoen/PG6301-1-22V-Webutvikling-og-API-design#readme",
+  "homepage": "https://github.com/simenhaga/tasks-for-exam#readme",
   "devDependencies": {
     "concurrently": "^7.1.0"
   },
