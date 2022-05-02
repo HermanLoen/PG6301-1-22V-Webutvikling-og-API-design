@@ -22,5 +22,8 @@
   "homepage": "https://github.com/HermanLoen/PG6301-1-22V-Webutvikling-og-API-design#readme",
   "devDependencies": {
     "concurrently": "^7.1.0"
+  },
+  "dependencies": {
+    "prettier": "^2.6.2"
   }
 }
