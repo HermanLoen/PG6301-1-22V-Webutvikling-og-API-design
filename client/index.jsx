@@ -56,12 +56,18 @@ function FrontPage({ reload }) {
   );
 }
 
-async function fetchJSON(url) {
-  const res = await fetch(url);
+async function fetchJSON(url, options = {}) {
+  const res = await fetch(url, {
+    method: options.method || "get",
+    headers: options.json ? { "content-type": "application/json" } : {},
+    body: options.json && JSON.stringify(options.json),
+  });
   if (!res.ok) {
-    throw new Error("Failed to load"`${res.status}: ${res.statusText}`);
+    throw new Error(`Failed ${res.status}: ${(await res).statusText}`);
   }
-  return await res.json();
+  if (res.status === 200) {
+    return await res.json();
+  }
 }
 
 function Login() {
@@ -189,10 +195,39 @@ function ListMovies() {
 }
 
 function AddNewMovie() {
+  const [title, setTitle] = useState("");
+  const [plot, setPlot] = useState("");
+  const [year, setYear] = useState("");
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await fetchJSON("/api/movies/new", {
+      method: "post",
+      json: { title, year, plot },
+    });
+    setTitle("");
+    setYear("");
+    setPlot("");
+    navigate("/");
+  }
+
   return (
-    <form>
-      <Link to={"/"}>Back</Link>
-      <h1>Add new movie</h1>
+    <form onSubmit={handleSubmit}>
+      <h1>Add Movie</h1>
+      <div>
+        Title:
+        <input value={title} onChange={(e) => setTitle(e.target.value)} />
+      </div>
+      <div>
+        Year:
+        <input value={year} onChange={(e) => setYear(e.target.value)} />
+      </div>
+      <div>Plot:</div>
+      <div>
+        <textarea value={plot} onChange={(e) => setPlot(e.target.value)} />
+      </div>
+      <button>Submit</button>
     </form>
   );
 }

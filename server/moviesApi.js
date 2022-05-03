@@ -17,12 +17,13 @@ export function MoviesApi(mongoDatabase) {
       .toArray();
     res.json(movies);
   });
+
   router.post("/new", (req, res) => {
-    const { title } = req.body;
-    const result = mongoDatabase.collection("movies").insertOne({
-      title,
-    });
-    res.sendStatus(500);
+    console.log("inside");
+    console.log(req.body);
+    const { title, plot, year } = req.body;
+    mongoDatabase.collection("movies").insertOne({ title, plot, year });
+    res.sendStatus(200);
   });
   return router;
 }
