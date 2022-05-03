@@ -61,8 +61,7 @@ function Login() {
       response_type: "token",
       response_mode: "fragment",
       scope,
-      client_id:
-        "394773558551-ue1hm3k2seo94kdh0bsspuv3d95272bp.apps.googleusercontent.com",
+      client_id,
       redirect_uri: window.location.origin + "/login/callback",
     };
     window.location.href =
