@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
+import { MoviesApi } from "./moviesApi.js";
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ const oauth_config = {
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
+app.use("/api/movies", MoviesApi());
 
 export async function fetchJSON(url, options) {
   const res = await fetch(url, options);

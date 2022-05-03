@@ -124,8 +124,8 @@ function Profile() {
 
 function useLoading(loadingFunction) {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
-  const [data, setData] = useState(true);
+  const [error, setError] = useState();
+  const [data, setData] = useState();
 
   async function load() {
     try {
