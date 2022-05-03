@@ -57,9 +57,10 @@ function FrontPage({ reload }) {
 }
 
 async function fetchJSON(url, options = {}) {
+  options.json && console.log("fromFetch" + JSON.stringify(options.json));
   const res = await fetch(url, {
     method: options.method || "get",
-    headers: options.json ? { "content-type": "application/json" } : {},
+    headers: options.json ? { "Content-Type": "application/json" } : {},
     body: options.json && JSON.stringify(options.json),
   });
   if (!res.ok) {

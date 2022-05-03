@@ -1,6 +1,6 @@
+import bodyParser from "body-parser";
 import express from "express";
 import * as path from "path";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
@@ -17,6 +17,7 @@ const oauth_config = {
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const mongoClient = new MongoClient(process.env.MONGODB_URL);
@@ -33,9 +34,6 @@ export async function fetchJSON(url, options) {
 
   if (!res.ok) {
     throw new Error(`Failed to load, ${res.status} ${res.statusText}`);
-  }
-  if (res.ok) {
-    console.log(res);
   }
 
   return await res.json();

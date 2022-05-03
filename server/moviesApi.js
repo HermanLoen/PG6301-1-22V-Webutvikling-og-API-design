@@ -19,11 +19,9 @@ export function MoviesApi(mongoDatabase) {
   });
 
   router.post("/new", (req, res) => {
-    console.log("inside");
-    console.log(req.body);
     const { title, plot, year } = req.body;
     mongoDatabase.collection("movies").insertOne({ title, plot, year });
-    res.sendStatus(200);
+    res.sendStatus(204);
   });
   return router;
 }
