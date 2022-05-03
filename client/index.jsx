@@ -70,7 +70,7 @@ function Login() {
   return <h1>Please wait</h1>;
 }
 
-function LoginCallback({ reload }) {
+function LoginCallback() {
   const navigate = useNavigate();
   useEffect(async () => {
     const { access_token } = Object.fromEntries(
@@ -81,12 +81,17 @@ function LoginCallback({ reload }) {
       body: new URLSearchParams({ access_token }),
     });
     if (res.ok) {
-      reload();
+      console.log(res);
+      //window.location.href = "/";
       navigate("/");
     }
   });
 
-  return <h1>Please wait</h1>;
+  return (
+    <>
+      <h1>Please wait</h1>
+    </>
+  );
 }
 
 function Profile() {
@@ -130,10 +135,7 @@ function Application() {
           <Route path={"/"} element={<FrontPage reload={loadLoginInfo} />} />
           <Route path={"/profile"} element={<Profile />} />
           <Route path={"/login"} element={<Login />} />
-          <Route
-            path={"/login/callback"}
-            element={<LoginCallback reload={loadLoginInfo} />}
-          />
+          <Route path={"/login/callback"} element={<LoginCallback />} />
         </Routes>
       </BrowserRouter>
     </ProfileContext.Provider>

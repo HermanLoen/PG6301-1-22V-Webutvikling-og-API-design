@@ -14,14 +14,16 @@ const oauth_config = {
 };
 
 const app = express();
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-async function fetchJSON(url, options) {
+export async function fetchJSON(url, options) {
   const res = await fetch(url, options);
+
   if (!res.ok) {
-    throw new Error(`Error fetching ${url}: ${res.status} ${res.statusText}`);
+    throw new Error(`Failed to load, ${res.status} ${res.statusText}`);
   }
+
   return await res.json();
 }
 
