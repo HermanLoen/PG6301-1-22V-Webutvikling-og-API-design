@@ -22,7 +22,10 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 const mongoClient = new MongoClient(process.env.MONGODB_URL);
 mongoClient.connect().then(async () => {
   console.log("connected to mongo db");
-  app.use("/api/movies", MoviesApi(mongoClient.db("Movie-database")));
+  app.use(
+    "/api/movies",
+    MoviesApi(mongoClient.db(process.env.MONGODB_DATABASE || "Movie-database"))
+  );
 });
 
 export async function fetchJSON(url, options) {

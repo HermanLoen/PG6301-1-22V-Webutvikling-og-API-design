@@ -149,6 +149,16 @@ function useLoading(loadingFunction) {
   return { loading, error, data };
 }
 
+function MovieCard({ movie: { title, plot, poster } }) {
+  return (
+    <>
+      <h3>{title}</h3>
+      {poster && <img src={poster} width={100} alt={"Movie poster"} />}
+      <div>{plot}</div>
+    </>
+  );
+}
+
 function ListMovies() {
   const { loading, error, data } = useLoading(async () =>
     fetchJSON("/api/movies")
@@ -170,11 +180,10 @@ function ListMovies() {
     <div>
       <Link to={"/"}>Back</Link>
       <h1>Movies in the database</h1>
-      <ul>
-        {data.map((movie) => (
-          <li key={movie.title}>{movie.title}</li>
-        ))}
-      </ul>
+
+      {data.map((movie) => (
+        <MovieCard key={movie.title} movie={movie} />
+      ))}
     </div>
   );
 }
