@@ -39,6 +39,19 @@ function FrontPage({ reload }) {
           <button onClick={handleLogout}>Log out</button>
         </div>
       )}
+      {userinfo && (
+        <div>
+          <h1>Movie Database</h1>
+          <ul>
+            <li>
+              <Link to={"/movies"}>List movies</Link>
+            </li>
+            <li>
+              <Link to={"/movies/new"}>Add new movie</Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -46,7 +59,7 @@ function FrontPage({ reload }) {
 async function fetchJSON(url) {
   const res = await fetch(url);
   if (!res.ok) {
-    throw new Error();
+    throw new Error("Failed to load"`${res.status}: ${res.statusText}`);
   }
   return await res.json();
 }
@@ -109,6 +122,67 @@ function Profile() {
   );
 }
 
+function useLoading(loadingFunction) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(true);
+  const [data, setData] = useState(true);
+
+  async function load() {
+    try {
+      setLoading(true);
+      setData(await loadingFunction());
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    load();
+  }, []);
+
+  return { loading, error, data };
+}
+
+function ListMovies() {
+  const { loading, error, data } = useLoading(async () =>
+    fetchJSON("/api/movies")
+  );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <div>{error.toString()}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <Link to={"/"}>Back</Link>
+      <h1>Movies in the database</h1>
+      <ul>
+        {data.map((movie) => (
+          <li key={movie.title}>{movie.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function AddNewMovie() {
+  return (
+    <form>
+      <Link to={"/"}>Back</Link>
+      <h1>Add new movie</h1>
+    </form>
+  );
+}
+
 function Application() {
   const [loading, setLoading] = useState(true);
   const [login, setLogin] = useState();
@@ -136,6 +210,8 @@ function Application() {
           <Route path={"/profile"} element={<Profile />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/login/callback"} element={<LoginCallback />} />
+          <Route path={"/movies"} element={<ListMovies />} />
+          <Route path={"/movies/new"} element={<AddNewMovie />} />
         </Routes>
       </BrowserRouter>
     </ProfileContext.Provider>
