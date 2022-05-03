@@ -83,9 +83,10 @@ function Login() {
   return <h1>Please wait</h1>;
 }
 
-function LoginCallback() {
+function LoginCallback({ reload }) {
   const navigate = useNavigate();
-  useEffect(async () => {
+
+  async function callBack() {
     const { access_token } = Object.fromEntries(
       new URLSearchParams(window.location.hash.substring(1))
     );
@@ -95,9 +96,13 @@ function LoginCallback() {
     });
     if (res.ok) {
       console.log(res);
-      //window.location.href = "/";
+      reload();
       navigate("/");
     }
+  }
+
+  useEffect(() => {
+    callBack();
   });
 
   return (
@@ -209,7 +214,10 @@ function Application() {
           <Route path={"/"} element={<FrontPage reload={loadLoginInfo} />} />
           <Route path={"/profile"} element={<Profile />} />
           <Route path={"/login"} element={<Login />} />
-          <Route path={"/login/callback"} element={<LoginCallback />} />
+          <Route
+            path={"/login/callback"}
+            element={<LoginCallback reload={loadLoginInfo} />}
+          />
           <Route path={"/movies"} element={<ListMovies />} />
           <Route path={"/movies/new"} element={<AddNewMovie />} />
         </Routes>

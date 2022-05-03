@@ -26,6 +26,9 @@ export async function fetchJSON(url, options) {
   if (!res.ok) {
     throw new Error(`Failed to load, ${res.status} ${res.statusText}`);
   }
+  if (res.ok) {
+    console.log(res);
+  }
 
   return await res.json();
 }
